@@ -1,35 +1,46 @@
-version: '3.7'
 
 services:
+
+  zookeeper:
+    image: bitnami/zookeeper:latest
+    ports:
+      - "2181:2181"
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+
+  kafka:
+    image: bitnami/kafka:latest
+    ports:
+      - "9092:9092"
+    environment:
+      - KAFKA_BROKER_ID=1
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092
+      - ALLOW_PLAINTEXT_LISTENER=yes
+    depends_on:
+      - zookeeper
+
   mongo:
     image: mongo:latest
     container_name: mongo-container
     ports:
       - "27017:27017"
-    volumes:
-      - mongo-data:/data/db
-    networks:
-      - log-net
 
   producer:
     build: ./producer
-    container_name: producer-container
     depends_on:
-      - mongo
-    networks:
-      - log-net
+      - kafka
 
   consumer:
     build: ./consumer
-    container_name: consumer-container
+    depends_on:
+      - kafka
+      - mongo
+
+  dashboard:
+    build: ./dashboard
+    ports:
+      - "8501:8501"
     depends_on:
       - mongo
-    networks:
-      - log-net
-
-volumes:
-  mongo-data:
-
-networks:
-  log-net:
-    driver: bridge

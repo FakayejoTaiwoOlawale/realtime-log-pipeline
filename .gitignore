@@ -1,15 +1,16 @@
-# Ignore Python virtual environments
-venv/
+# Python
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+env/
+venv/
+*.env
 
-# Ignore system files
-.DS_Store
-Thumbs.db
+# Docker
+*.log
+docker-compose.override.yml
+docker-compose.yml
 
-# Ignore editor files
-.vscode/
-.idea/
-
-# Ignore environment variables and secrets
-.env
+# Node.js (if applicable)
+node_modules/

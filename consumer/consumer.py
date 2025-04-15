@@ -23,9 +23,8 @@ print("Consuming logs and storing in MongoDB...")
 
 # Consume logs and insert into MongoDB
 for message in consumer:
-    log = message.value
-    print(f"Received log: {log}")
+    print(f"Received log: {message.value}")
     
     # Insert log into MongoDB
-    logs_collection.insert_one(log)
+    logs_collection.insert_one(message.value)
     print("Log inserted into MongoDB.")

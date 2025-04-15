@@ -3,11 +3,8 @@
 from kafka import KafkaProducer
 import json
 import time
-from faker import Faker
 from datetime import datetime
 import random
-
-faker = Faker()
 
 # Log levels and services
 log_levels = ['INFO', 'WARNING', 'ERROR']
@@ -57,7 +54,7 @@ print("Producing logs with more variety...")
 
 
 
-
+#making the custom data
 def log_collate():
     service = random.choice(services)
     level = random.choice(log_levels)
