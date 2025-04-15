@@ -13,7 +13,7 @@ logs_collection = db['logs']  # Collection
 # Kafka Consumer setup
 consumer = KafkaConsumer(
     'logs',  # the topic to listen to
-    bootstrap_servers='localhost:9092',
+    bootstrap_servers='kafka:9092',
     value_deserializer=lambda m: json.loads(m.decode('utf-8')),
     auto_offset_reset='earliest',  # Start from the first log (if available)
     group_id='log_consumer_group'
